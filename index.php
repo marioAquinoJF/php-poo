@@ -1,7 +1,7 @@
 <?php
 require_once 'controllers/ClientController.php';
-$clients = Client::All();
-//   showTableHead($clients[0]->getData());
+require_once 'controllers/HomeController.php';
+//$clients = Client::All();
 ?>
 <!DOCTYPE html>
 <!--
@@ -17,25 +17,32 @@ and open the template in the editor.
         <link rel="stylesheet" href="./css/app.css" >
     </head>     
     <body>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <a class="btn btn-primary navbar-btn" href="./">Home</a>
+            </div>
+        </nav>
         <div class="container">
-
-
-
 
             <?php
             if (!isset($_GET['page'])):
-                $_GET['order'] = !isset($_GET['order']) ? 'asc' : $_GET['order']; 
-                ClientController::namesList($_GET['order']);
+                HomeController::index();
             else :
-                $pg = explode("-", $_GET['page']);
-                switch ($pg[0]) {
+                switch ($_GET['page']) {
+                    case "home":
+                        HomeController::index();
+                        break;
+
+                    case "clients":
+                        ClientController::namesList($_GET['order']);
+                        break;
+
                     case "showClient":
-                        $id = str_replace('id:', '', $pg[1]);
-                        ClientController::show($id);
+                        ClientController::show($_GET['id']);
                         break;
 
                     default:
-                        ClientController::namesList();
+                        HomeController::index();
                         break;
                 }
             endif;

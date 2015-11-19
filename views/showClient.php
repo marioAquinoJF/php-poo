@@ -9,4 +9,4 @@
     echo $ths;
     ?>
 </ul>
-<a href="/" class="btn btn-primary">Lista de Clientes</a>
+<a href="index.php?page=clients&order=<?=$_GET['order']?>" class="btn btn-primary">Lista de Clientes</a>
